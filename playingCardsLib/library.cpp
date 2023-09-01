@@ -1,112 +1,47 @@
 #include "library.h"
 
-#include <iostream>
-#include <algorithm>
-#include <random>
-#include <chrono>
+//Manipulation
+void reset(){
+    clear();
+    for (int i = 0, i < 52, ++i)
+        .insert(card(i), i);
+}
+void shuffle(unsigned int seed = 0){
+    seed = (seed == 0) ? chrono::system_clock::now().time_since_epoch().count() : seed;
+    default_random_engine rng(seed);
 
-using namespace std;
+    std::shuffle(.begin(), .end(), rng);
+}   //Shuffles cards in deck
+deck cut(size_type spot = 0);    //Cuts deck (shuffles without changing order)
+card draw(int pos = 0, bool reverse = false);   //Draws card from dec (removes and outputs card)
+bool remove(int pos = 0, bool reverse = false); //Removes card from deck (removes card)
+bool insert(card in, int pos = 0, bool reverse = false, bool duplicates = false);    //Inserts card into deck
 
-typedef  unsigned long size_type;
+//Data
+card peek(int pos = 0, bool reverse = false);
+size_type seek (card search, size_type start = 0, bool reverse = false);
 
-enum suit{
-    club,
-    diamond,
-    heart,
-    spade
-};
 
-struct card{
-    int data;
 
-    explicit card(int value=0) {
-        data = value;
+//Overloads
+const bool cards::operator==(cards rhs)
+{
+    int deckSize = size();
+
+    if (empty())
+    {
+        if (rhs.empty())
+            return true;
+        return false;
     }
+    else if (rhs.empty())
+        return false;
 
-    [[nodiscard]] int value() const{
-        return data % 13;
-    };
-    [[nodiscard]] int suit() const{
-        return data / 13;
-    };
-};
+    if (deckSize != rhs.size())
+        return false;
 
-class deck{
-    vector<card> cards; //Front = bottom, Back = top
-
-public:
-    //De/Constructors
-    deck(){
-        for(int i = 0; i < 52; ++i)
-            cards.emplace_back(i);
-    };
-    deck(deck& old){
-        cards = old.cards;
-    }
-    explicit deck(vector<card>& old){
-        cards = old;
-    }
-    ~deck() = default;
-
-    //Manipulations
-    void shuffle(){
-        unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-        default_random_engine rng(seed);
-
-        std::shuffle(cards.begin(), cards.end(), rng);
-    }
-    deck cut(size_type spot = 0){
-        spot = (spot == 0) ? cards.size()/2:spot;
-        vector<card> tmp;
-
-        for (size_type i = 0; i < spot; ++i){
-            tmp.emplace(tmp.front(), cards.)
-        }
-
-    }
-    card dtop(){
-        card tmp = cards.at(cards.size());
-        cards.pop_back();
-        return tmp;
-    }
-    card dbottom(){
-        card tmp = cards.at(0);
-        cards.erase(cards.begin());
-        return tmp;
-    }
-    card dmid(int pos){
-        card tmp = cards.at(pos);
-        cards.erase(cards.begin() + pos);
-        return tmp;
-    }
-    bool ptop(card insert){
-        cards.emplace_back(insert);
-        return true;
-    }
-    bool pbottom(card insert){
-        cards.emplace(cards.begin(), insert);
-        return true;
-    }
-    bool pmid(card insert, int pos){
-        cards.emplace(cards.begin()+pos, insert);
-        return true;
-    }
-
-    //Data
-    size_type size(){
-        return cards.size();
-    }
-    card top(){
-        return cards.at(cards.size());
-    }
-    card bottom(){
-        return cards.at(0);
-    }
-    card mid(int pos){
-        return cards.at(pos);
-    }
-
-
-
-private:
-};
+    for (int i = 0; i < deckSize; ++i)
+        if (at(i) != rhs.at(i))
+            return false;
+    return true;
+}
