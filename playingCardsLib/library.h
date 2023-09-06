@@ -2,34 +2,87 @@
 #define PLAYINGCARDSLIB_LIBRARY_H
 
 #include <iostream>
+#include <iomanip>
 #include <algorithm>
 #include <random>
+#include <time.h>
 #include <chrono>
 
 using namespace std;
 
 typedef  unsigned long size_type;
 
-enum suit{
-    club,
-    diamond,
-    heart,
-    spade
-};
+enum class suits{ club, diamond, heart, spade }; //Lowest to Highest Value
+
+inline suits fromInt(const int val){
+    return static_cast<suits>(val);
+}
+
+inline suits fromChar(const char val){
+    if (val == toupper('C'))
+        return suits::club;
+    if (val == toupper('D'))
+        return suits::diamond;
+    if (val == toupper('H'))
+        return suits::heart;
+    if (val == toupper('S'))
+        return suits::spade;
+    return suits();
+}
+
+inline ostream& operator<<(ostream& out, const suits& rhs){
+    if (rhs == suits::club)
+        out << "C";
+    else if (rhs == suits::diamond)
+        out << "D";
+    else if 
+}
 
 struct card{
     int data;
 
     explicit card(int value=0) {
-        data = value;
+        data = (value % 52);
     }
 
     [[nodiscard]] int value() const{
-        return data % 13;
+        return (data % 52) % 13;
     };
-    [[nodiscard]] int suit() const{
-        return data / 13;
+    [[nodiscard]] suits suit() const{
+        return static_cast<suits>((data % 52) / 13);
     };
+
+
+    //Overloads
+    inline card operator=(int rhs){
+        data = rhs;
+    }
+
+    inline card operator=(card rhs){
+        data = rhs.data;
+    }
+
+    //Input/Output
+    inline friend ostream& operator<<(ostream& out, const card& rhs) {
+        //Output card value
+        out << setfill(' ') << setw(2) << rhs.value();
+
+        //Ouput suit
+        out << rhs.suit();
+
+        return out;
+    }
+    inline friend istream& operator>>(istream& in, _card& rhs) {
+        //Defining variables
+        int tempInt;
+
+        //Read in values
+        in >> tempInt;
+        rhs.fromInt(tempInt);
+
+        return in;
+    }
+
 
     const bool operator==(const card rhs);
     const bool operator!=(const card rhs);
@@ -39,33 +92,26 @@ class deck : public vector<card>{
 
 public:
     //De/Constructors
-    deck(){
-        for(int i = 0; i < 52; ++i)
-            .emplace_back(i);
-    };
-    deck(deck& old){
-        this = old;
-    }
-    explicit deck(vector<card>& old){
-        this = old;
-    }
-    ~deck() = default;
+    deck(bool fill = true);
+    deck(deck& old);
+    ~deck();
 
     //Manipulations
     void reset();                                   //Clears deck and fills with default values
-    void shuffle(unsigned int seed = 0);            //Shuffles cards in deck
-    deck cut(size_type spot = 0);                   //Cuts deck (shuffles without changing order)
+    void shuffle(unsigned seed = 0);            //Shuffles cards in deck
+    bool cut(size_type spot = 0);                   //Cuts deck (shuffles without changing order)
     card draw(int pos = 0, bool reverse = false);   //Draws card from dec (removes and outputs card)
     bool remove(int pos = 0, bool reverse = false); //Removes card from deck (removes card)
     bool insert(card in, int pos = 0, bool reverse = false, bool duplicates = false);    //Inserts card into deck
 
     //Data
     card peek(int pos = 0, bool reverse = false);
-    size_type seek (card search, size_type start = 0, bool reverse = false);
+    int seek (card search, int start = 0, bool reverse = false);
 
     //Conversion
 
     //Overloads
+    const deck operator=(const deck rhs);
     const bool operator==(const deck rhs);
     friend ostream& operator<<(ostream& out, const deck& rhs);
     friend ifstream& operator>>(ifstream& in, deck& rhs);
@@ -92,12 +138,12 @@ inline ifstream& operator>>(ifstream& in, deck& rhs)
 {
     //Defining variables
     int tempInt;
-    CARD::_card tempCard;
+    card tempCard;
 
     //While cards can still be read from the file
     while (in >> tempInt)
     {
-        rhs.place(tempCard.fromInt(tempInt), 0, true);
+        rhs.insert(tempCard.fromInt(tempInt), 0, true);
     }
 
     return in;
