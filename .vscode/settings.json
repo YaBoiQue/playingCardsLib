@@ -2,5 +2,6 @@
     "files.associations": {
         "*.S": "arm",
         "iomanip": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "C:/dev/gitlab/playingCardsLib/playingCardsLib"
 }

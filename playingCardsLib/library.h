@@ -7,6 +7,7 @@
 #include <random>
 #include <time.h>
 #include <chrono>
+#include <fstream>
 
 using namespace std;
 
@@ -35,7 +36,10 @@ inline ostream& operator<<(ostream& out, const suits& rhs){
         out << "C";
     else if (rhs == suits::diamond)
         out << "D";
-    else if 
+    else if (rhs == suits::heart)
+        out << "H";
+    else if (rhs == suits::spade)
+        out << "S";
 }
 
 struct card{
@@ -72,13 +76,12 @@ struct card{
 
         return out;
     }
-    inline friend istream& operator>>(istream& in, _card& rhs) {
+    inline friend istream& operator>>(istream& in, card& rhs) {
         //Defining variables
         int tempInt;
 
         //Read in values
-        in >> tempInt;
-        rhs.fromInt(tempInt);
+        in >> rhs.data;
 
         return in;
     }
@@ -97,24 +100,24 @@ public:
     ~deck();
 
     //Manipulations
-    void reset();                                   //Clears deck and fills with default values
-    void shuffle(unsigned seed = 0);            //Shuffles cards in deck
-    bool cut(size_type spot = 0);                   //Cuts deck (shuffles without changing order)
-    card draw(int pos = 0, bool reverse = false);   //Draws card from dec (removes and outputs card)
-    bool remove(int pos = 0, bool reverse = false); //Removes card from deck (removes card)
+    void reset();                                       //Clears deck and fills with default values
+    void shuffle(unsigned seed = 0);                    //Shuffles cards in deck
+    bool cut(size_type spot = 0);                       //Cuts deck (shuffles without changing order)
+    card draw(int pos = 0, bool reverse = false);       //Draws card from dec (removes and outputs card)
+    bool remove(int pos = 0, bool reverse = false);     //Removes card from deck (removes card)
     bool insert(card in, int pos = 0, bool reverse = false, bool duplicates = false);    //Inserts card into deck
 
     //Data
-    card peek(int pos = 0, bool reverse = false);
-    int seek (card search, int start = 0, bool reverse = false);
+    card peek(int pos = 0, bool reverse = false);       //View card at pos in deck
+    int seek (card search, int start = 0, bool reverse = false);    //Search for card in deck. Returns card 52 if not found.
 
     //Conversion
 
     //Overloads
-    const deck operator=(const deck rhs);
-    const bool operator==(const deck rhs);
-    friend ostream& operator<<(ostream& out, const deck& rhs);
-    friend ifstream& operator>>(ifstream& in, deck& rhs);
+    const deck operator=(const deck rhs);               //Sets deck equal to right hand rhs
+    const bool operator==(const deck rhs);              //Checks if deck is equal to rhs
+    friend ostream& operator<<(ostream& out, const deck& rhs);  //Export deck to ostream
+    friend ifstream& operator>>(ifstream& in, deck& rhs);       //Import deck from istream
 
 private:
 };
@@ -143,7 +146,7 @@ inline ifstream& operator>>(ifstream& in, deck& rhs)
     //While cards can still be read from the file
     while (in >> tempInt)
     {
-        rhs.insert(tempCard.fromInt(tempInt), 0, true);
+        rhs.insert((tempCard = card(tempInt)), 0, true);
     }
 
     return in;
