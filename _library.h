@@ -13,102 +13,61 @@ using namespace std;
 
 typedef  unsigned long size_type;
 
-class Suit
-{
-public:
-    enum Value : uint8_t
-    {
-        club,
-        diamond,
-        heart,
-        spade
-    };
+enum class suits{ club, diamond, heart, spade }; //Lowest to Highest Value
 
-    //De/Constructors
-    Suit() = default;
-    constexpr Suit(const Value& aSuit) : value(aSuit){};
-    constexpr Suit(const int& val) : value(static_cast<Value>(val)){};
-    constexpr Suit(const char& val) : value(Suit::club) {fromChar(val);};
+inline suits fromInt(const int val){
+    return static_cast<suits>(val);
+}
 
-#if Enable switch(suit) use case:
-    // Allow switch and comparisons.
-    constexpr operator Value() const { return value; }
+inline suits fromChar(const char val){
+    if (val == toupper('C'))
+        return suits::club;
+    if (val == toupper('D'))
+        return suits::diamond;
+    if (val == toupper('H'))
+        return suits::heart;
+    if (val == toupper('S'))
+        return suits::spade;
+    return suits();
+}
 
-    // Prevent usage: if(suit)
-    explicit operator bool() const = delete;        
-#else
-    constexpr bool operator==(Suit a) const;
-    constexpr bool operator!=(Suit a) const;
-#endif
+inline ostream& operator<<(ostream& out, const suits& rhs){
+    if (rhs == suits::club)
+        out << "C";
+    else if (rhs == suits::diamond)
+        out << "D";
+    else if (rhs == suits::heart)
+        out << "H";
+    else if (rhs == suits::spade)
+        out << "S";
+}
 
-    constexpr bool IsBlack() const;
-    constexpr bool IsRed() const;
+struct card{
+    int data;
 
-    constexpr bool fromInt(const int& val);
-    constexpr bool fromChar(const char& val);
-    constexpr int  toInt()  const;
-    constexpr char toChar() const; 
-
-    friend ostream& operator<<(ostream& out, const Suit& rhs);
-    Suit& operator=(const Suit& rhs);
-    Suit& operator=(const int& rhs);
-    Suit& operator=(const char& rhs);
-    int& operator*(const int& rhs) const;
-
-private:
-    Value value;
-};
-
-
-class Card {
-    int _rank;   //0=ace, 1=two, 2=three, 3=four, 4=five, 5=six, 6=seven, 7=eight, 8=nine, 9=ten, 10=jack, 11=queen, 12=king
-    Suit _suit;  //0=club, 2=diamond, 3=heart, 4=spade
-
-public:
-    explicit Card(int value=0) {
-        _rank = (value % 52) % 13;
-        _suit = (value % 52) / 13;
-    }
-    explicit Card(int rank, Suit suit ){
-        rank = rank % 13;
-        _rank = rank;
-        _suit = suit;
-    }
-    explicit Card(int rank, int suit){
-        rank = rank % 13;
-        suit = suit % 4;
-        _rank = rank;
-        _suit = suit;
-    }
-    explicit Card(const Card& card){
-        
+    explicit card(int value=0) {
+        data = (value % 52);
     }
 
     [[nodiscard]] int value() const{
-        return _rank + (_suit * 13);
+        return (data % 52) % 13;
     };
-    [[nodiscard]] Suit suit() const{
-        return _suit;
+    [[nodiscard]] suits suit() const{
+        return static_cast<suits>((data % 52) / 13);
     };
-    [[nodiscard]] int rank() const{
-        return _rank;
-    }
 
 
     //Overloads
-    inline Card& operator=(const int& rhs){
-        _rank = (rhs % 52) % 13;
-        _suit = (rhs % 52) / 13;
+    inline card& operator=(const int& rhs){
+        data = rhs;
     }
-    inline Card& operator=(const Card& rhs){
-        _rank = rhs._rank;
-        _suit = rhs._suit;
+
+    inline card& operator=(const card& rhs){
+        data = rhs.data;
     }
-    bool operator==(const Card rhs);
-    bool operator!=(const Card rhs);
 
     //Input/Output
-    inline friend ostream& operator<<(ostream& out, const Card& rhs) {
+    inline friend ostream& operator<<(ostream& out, const card& rhs) {
         //Output card value
         out << setfill(' ') << setw(2) << rhs.value();
 
@@ -117,8 +76,20 @@ public:
 
         return out;
     }
-};
+    inline friend istream& operator>>(istream& in, card& rhs) {
+        //Defining variables
+        int tempInt;
 
+        //Read in values
+        in >> rhs.data;
+
+        return in;
+    }
+
+
+    bool operator==(const card rhs);
+    bool operator!=(const card rhs);
+};
 
 class deck {
 

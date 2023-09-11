@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "*.S": "arm",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "iosfwd": "cpp"
     },
     "cmake.sourceDirectory": "C:/dev/gitlab/playingCardsLib/playingCardsLib"
 }

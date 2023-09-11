@@ -113,20 +113,19 @@ int deck::seek(card search, int start, bool reverse)
     return -1;
 }
 
-const deck deck::operator=(const deck rhs)
+deck& deck::operator=(const deck& rhs)
 {
     clear();
 
     for (size_type i = 0; i < rhs.size(); ++i)
         insert(rhs.at(i), i);
 
-    return false;
 }
 
 // Overloads
-const bool deck::operator==(deck rhs)
+bool deck::operator==(const deck& rhs)
 {
-    int deckSize = size();
+    size_type deckSize = size();
 
     if (empty())
     {
@@ -142,6 +141,129 @@ const bool deck::operator==(deck rhs)
 
     for (int i = 0; i < deckSize; ++i)
         if (at(i) != rhs.at(i))
+            return false;
+    return true;
+}
+
+bool card::operator==(const card rhs) {
+    return 0;
+}
+
+constexpr bool Suit::operator==(Suit a) const
+{
+    return value == a.value;
+}
+
+constexpr bool Suit::operator!=(Suit a) const
+{
+    return value != a.value;
+}
+
+constexpr bool Suit::IsBlack() const
+{
+    return (value == club) || (value == spade);
+}
+
+constexpr bool Suit::IsRed() const
+{
+    return (value == heart) || (value == diamond);
+}
+
+constexpr bool Suit::fromInt(const int &val)
+{
+    if (val > 3) { return false; }
+    value = static_cast<Value>(val); 
+}
+
+constexpr bool Suit::fromChar(const char &val)
+{
+    switch(toupper(val)){
+        case 'C':
+            value = club;
+            break;
+        case 'D':
+            value = diamond;
+            break;
+        case 'H':
+            value = heart;
+            break;
+        case 'S':
+            value = spade;
+            break;
+        default:
+            return false;
+    }
+    return true;
+}
+
+constexpr int Suit::toInt() const
+{
+    return static_cast<int>(value);
+}
+
+constexpr char Suit::toChar() const
+{
+    switch (value)
+    {
+        case club:
+            return 'C';
+        case diamond:
+            return 'D';
+        case heart:
+            return 'H';
+        case spade:
+            return 'S';
+        default:
+            return 'E';
+    }
+}
+
+ostream &operator<<(ostream &out, const Suit &rhs)
+{
+    out << rhs.toChar();
+
+    return out;
+}
+
+Suit &Suit::operator=(const Suit &rhs)
+{
+    value = rhs.value;
+    return Suit(rhs);
+}
+
+Suit &Suit::operator=(const int &rhs)
+{
+    if (fromInt(rhs)) 
+        return Suit(rhs);
+    return;
+}
+
+Suit &Suit::operator=(const char &rhs)
+{
+    if(fromChar) 
+        return Suit(rhs);
+    return;
+}
+
+int &Suit::operator*(const int &rhs) const
+{
+    int tmp = toInt();
+    tmp = tmp * rhs;
+    return tmp;    
+}
+
+bool Card::operator==(const Card rhs)
+{
+    if (_suit == rhs._suit)
+        if(_rank == rhs._rank)
+            return true;
+    return false;
+}
+
+bool Card::operator!=(const Card rhs)
+{
+    if (_suit == rhs._suit)
+        if(_rank == rhs._rank)
             return false;
     return true;
 }
