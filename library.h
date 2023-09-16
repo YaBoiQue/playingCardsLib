@@ -110,27 +110,71 @@ public:
 
 
 
-#ifndef PLAYINGCARDSLIB_LIBRARY_H_DECK
-#define PLAYINGCARDSLIB_LIBRARY_H_DECK
-class deck {
-    struct node
-    {
-        Card card;
-        node* next = nullptr;
-        node* prev = nullptr;
-    };
-    node *headptr, *tailptr;
+#ifndef PLAYINGCARDSLIB_LIBRARY_H_NODE
+#define PLAYINGCARDSLIB_LIBRARY_H_NODE
 
+struct Node
+{
+    Card card;
+    Node* next = nullptr;
+    Node* prev = nullptr;
+
+};
+
+#endif //PLAYINGCARDSLIB_LIBRARY_H_NODE
+
+
+
+#ifndef PLAYINGCARDSLIB_LIBRARY_H_ITERATOR
+#define PLAYINGCARDSLIB_LIBRARY_H_ITERATOR
+
+class Iterator {
+    friend class Deck;
+    Node *_node;
 public:
     //De/Constructors
-    explicit deck(bool fill = true);
-    deck(deck& old);
-    ~deck();
+    Iterator(Node *node=nullptr): _node(node){}
+
+    //Operator Overloads
+    Card& operator*() {return _node->card;}
+    Iterator& operator++()
+    {
+        _node = _node->next;
+        return *this;
+    }
+    Iterator& operator--()
+    {
+        _node = _node->prev;
+        return *this;
+    }
+    friend bool operator==(const Iterator& lhs, const Iterator& rhs)
+    {
+        return lhs._node == rhs._node;
+    }
+    friend bool operator!=(const Iterator& lhs, const Iterator& rhs)
+    {
+        return lhs._node != rhs._node;
+    }
+};
+
+#endif //PLAYINGCARDSLIB_LIBRARY_H_ITERATOR
+
+
+
+#ifndef PLAYINGCARDSLIB_LIBRARY_H_DECK
+#define PLAYINGCARDSLIB_LIBRARY_H_DECK
+class Deck {
+public:
+
+    //De/Constructors
+    explicit Deck(bool fill = true);
+    Deck(Deck& old);
+    ~Deck();
 
     //Manipulations
     void clear();
     void reset();                                       //Clears deck and fills with default values
-    void shuffle(unsigned seed = 0);                    //Shuffles cards in deck
+    void shuffle(unsigned seed);                    //Shuffles cards in deck
     bool cut(size_type spot = 0);                       //Cuts deck (shuffles without changing order)
     Card& draw(int pos = 0, bool reverse = false);       //Draws card from dec (removes and outputs card)
     bool remove(int pos = 0, bool reverse = false);     //Removes card from deck (removes card)
@@ -143,37 +187,14 @@ public:
     [[nodiscard]]size_type size()const;
     [[nodiscard]]bool empty()const;
 
-
-    //Conversion
-
     //Overloads
-    deck& operator=(const deck& rhs);               //Sets deck equal to right hand rhs
-    bool operator==(const deck& rhs);              //Checks if deck is equal to rhs
-    inline friend ostream& operator<<(ostream& out, const deck& rhs)    //Export deck to ostream
-    {
-        size_type size = rhs.size();
+    Deck& operator=(const Deck& rhs);               //Sets deck equal to right hand rhs
+    bool operator==(const Deck& rhs);              //Checks if deck is equal to rhs
+    inline friend ostream& operator<<(ostream& out, const Deck& rhs);    //Export deck to ostream
+    friend ifstream& operator>>(ifstream& in, Deck& rhs);                //Import deck from istream
 
-        for (size_type i = 0; i < size; ++i)
-        {
-            out << rhs.peek(i);
-        }
-
-        return out;
-    }
-    friend ifstream& operator>>(ifstream& in, deck& rhs)                //Import deck from istream
-    {
-        //Defining variables
-        int tempInt;
-        Card tempCard;
-
-        //While cards can still be read from the file
-        while (in >> tempInt)
-        {
-            rhs.insert((tempCard = Card(tempInt)), 0, true);
-        }
-
-        return in;
-    }
+private:
+    Iterator head, tail;
 };
 
 #endif //PLAYINGCARDSLIB_LIBRARY_H_DECK
