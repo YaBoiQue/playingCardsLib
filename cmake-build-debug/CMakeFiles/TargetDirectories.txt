@@ -1,0 +1,3 @@
+/mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles/playingCardsLib.dir
+/mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles/rebuild_cache.dir

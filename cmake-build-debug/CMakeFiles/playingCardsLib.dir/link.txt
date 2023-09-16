@@ -1,0 +1,2 @@
+/usr/bin/ar qc libplayingCardsLib.a CMakeFiles/playingCardsLib.dir/library.cpp.o
+/usr/bin/ranlib libplayingCardsLib.a
