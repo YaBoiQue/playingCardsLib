@@ -1,5 +1,7 @@
 #include "library.h"
 
+typedef Deck::Iterator Iterator;
+
 #ifndef PLAYINGCARDSLIB_LIBRARY_CPP_SUIT
 #define PLAYINGCARDSLIB_LIBRARY_CPP_SUIT
 
@@ -68,20 +70,23 @@ constexpr bool Suit::fromChar(const char &val)
 Suit &Suit::operator=(const Suit &rhs)
 {
     value = rhs.value;
-    return Suit(rhs);
+    Suit tmpsuit = Suit(rhs);
+    return tmpsuit;
 }
 
 Suit &Suit::operator=(const int &rhs)
 {
+    Suit tmpsuit = Suit(rhs);
     if (fromInt(rhs)) 
-        return Suit(rhs);
+        return tmpsuit;
     return;
 }
 
 Suit &Suit::operator=(const char &rhs)
 {
+    Suit tmpsuit = Suit(rhs);
     if(fromChar) 
-        return Suit(rhs);
+        return tmpsuit;
     return;
 }
 
@@ -143,6 +148,12 @@ Card::Card(const Card &card)
     _suit = card._suit;
 }
 
+Card::Card(Card &&card)
+{
+    _rank = card._rank;
+    _suit = card._suit;
+}
+
 Card::Card(const Card *card)
 {
     _rank = card->_rank;
@@ -195,6 +206,14 @@ Card &Card::operator=(const Card &rhs)
     return *this;
 }
 
+Card &Card::operator=(Card &&rhs)
+{
+    _rank = rhs._rank;
+    _suit = rhs._suit;
+
+    return *this;
+}
+
 bool Card::operator==(const Card &rhs)
 {
     if (_suit == rhs._suit)
@@ -228,7 +247,7 @@ inline ostream &operator<<(ostream &out, const Deck &rhs)
 
     for (size_type i = 0; i < size; ++i)
     {
-        out << rhs.peek(i);
+        out << rhs.peek(rhs.begin() + i);
     }
 
     return out;
@@ -243,7 +262,7 @@ ifstream &operator>>(ifstream &in, Deck &rhs)
     //While cards can still be read from the file
     while (in >> tempInt)
     {
-        rhs.insert((tempCard = Card(tempInt)), 0, true);
+        rhs.insert((tempCard = Card(tempInt)), rhs.end());
     }
 
     return in;
@@ -252,43 +271,102 @@ ifstream &operator>>(ifstream &in, Deck &rhs)
 #endif //PLAYINGCARDSLIB_LIBRARY_CPP_CARD
 
 
+#ifndef PLAYINGCARDSLIB_LIBRARY_CPP_ITERATOR
+#define PLAYINGCARDSLIB_LIBRARY_CPP_ITERATOR
+
+Card &Deck::Iterator::operator*()
+{
+    return _node->next->card;
+}
+
+Iterator &Deck::Iterator::operator+(int rhs)
+{
+    for (int i = 0; i < rhs; ++i)
+    {
+        _node = _node->next;
+    }
+}
+
+Iterator &Deck::Iterator::operator-(int rhs)
+{
+    for (int i = 0; i < rhs; ++i)
+    {
+        _node = _node->prev;
+    }
+}
+
+Deck::Iterator &Deck::Iterator::operator++()
+{
+    _node = _node->next;
+    return *this;
+}
+
+Deck::Iterator &Deck::Iterator::operator++(int)
+{
+    Iterator tmp = *this;
+    _node = _node->next;
+    return tmp;
+}
+
+Deck::Iterator &Deck::Iterator::operator--()
+{
+    _node = _node->prev;
+    return *this;
+}
+
+Iterator &Deck::Iterator::operator--(int)
+{
+    Iterator tmp = *this;
+    _node = _node->prev;
+    return tmp;
+}
+
+#endif
+
+
 #ifndef PLAYINGCARDSLIB_LIBRARY_CPP_DECK
 #define PLAYINGCARDSLIB_LIBRARY_CPP_DECK
 
 //De/Constructors
 Deck::Deck(bool fill)
 {
-    head = NULL;
-    tail = NULL;
+    head = tail = new Node();
 
     if (fill)
         reset();
 }
 
-Deck::Deck(Deck& old)
+Deck::Deck(const Deck& old)
 {
-    Iterator copy;
-    Card tmp;
+    Node *copyptr = old.head, *newnode;
 
-    copy = old.head;
-
-    while (copy != NULL)
+    while (copyptr != nullptr)
     {
-        tmp = copy._node->card;
-        insert(tmp, 0, true, true);
-        ++copy;
+        insert(copyptr->card, end());
+        copyptr = copyptr->next;
+    }
+}
+
+Deck::Deck(Deck&& old)
+{
+    Node *copyptr = old.head, *newnode;
+
+    while (copyptr != nullptr)
+    {
+        insert(copyptr->card, end());
+        copyptr = copyptr->next;
     }
 }
 
 Deck::~Deck()
 {
-    Node *tmpptr = head;
+    Node *tmpptr;
 
-    while (tmpptr != nullptr)
+    while (head != nullptr)
     {
-        head = tmpptr->next;
-        delete tmpptr;
         tmpptr = head;
+        head = head->next;
+        delete tmpptr;
     }
 
     tail == nullptr;
@@ -312,220 +390,52 @@ void Deck::reset()
 {
     clear();
     for (int i = 0; i < 52; ++i)
-        insert(Card(i));
+        insert(Card(i), end());
 }
 
-void Deck::shuffle(unsigned seed)
+Card &Deck::draw(Iterator& pos)
 {
-    Node *slowptr = head, *fastptr = head;
+    Node *ptr = pos._node->next;
+    Card card = Card(ptr->card);
 
-    while (fastptr != nullptr)
-    {
+    pos._node->next = ptr->next;
+    ptr->next->prev = ptr->prev;
+    ptr->prev->next = ptr->next;
 
-    }
+    delete ptr;
+    return card;
 }
 
-
-
-bool Deck::cut(size_type at){
-    size_type tmpsize = size();
-    Node *tmpptr = head;
-
-    if (at > tmpsize - 1)
-        return false;
-
-    srand(time(0));
-    at = (at == 0) ? rand()%tmpsize : at;
-
-    for (int i = 0; i < at; ++i)
-        tmpptr = tmpptr->next;
-
-    tail->next = head;
-    head->prev = tail;
-    tail = tmpptr->prev;
-    tmpptr->prev->next = nullptr;
-    head = tmpptr;
-    tmpptr->prev = nullptr;
-
-    return true;
-}
-
-Card& Deck::draw(int pos, bool reverse){
-    size_type tmpsize = size() - 1;
-    Node *tmpptr = head;
-    Card tmp;
-
-    if (pos > tmpsize)
-        return;
-
-    pos = (reverse) ? tmpsize - pos : pos;
-
-    for (int i = 0; i < pos; ++i)
-    {
-        tmpptr = tmpptr->next;
-    }
-
-    tmp = tmpptr->card;
-    tmpptr->prev->next = tmpptr->next;
-    tmpptr->next->prev = tmpptr->prev;
-
-    delete tmpptr;
-
-    return tmp;
-}
-
-bool Deck::remove(int pos, bool reverse){
-    size_type tmpsize = size() - 1;
-    Node *tmpptr = head;
-
-    if (pos > tmpsize)
-        return false;
-
-    pos = (reverse) ? tmpsize - pos : pos;
-    
-    for (int i = 0; i < pos; ++i)
-    {
-        tmpptr = tmpptr->next;
-    }
-
-    tmpptr->next->prev = tmpptr->prev;
-    tmpptr->prev->next = tmpptr->next;
-    delete tmpptr;
-
-    return true;
-
-    Node* tmp = head;
-    tmp++;
-}
-
-bool Deck::insert(const Card& in, int pos, bool reverse, bool duplicates){
-    size_type tmpsize = size();
-    Node *tmpptr = head, *tmp;
-
-    tmp = new Node();
-
-    if (tmp == nullptr)
-    {
-        return false;
-    }
-
-    if ( pos > tmpsize)
-        return false;
-
-    pos = (reverse) ? tmpsize - pos : pos;
-
-    for(int i = 0; i < pos; ++i)
-    {
-        tmpptr = tmpptr->next;
-    }
-
-    tmp->card = in;
-
-    if(head == nullptr)
-    {
-        head = tmp;
-        tail = tmp;
-        return true;
-    }
-
-    if(tmpsize == pos)
-    {
-        tmp->prev = tail;
-        tail->next = tmp;
-        tail = tmp;
-        return true;
-    }
-
-    if(pos == 0)
-    {
-        tmp->next = head;
-        head->prev = tmp;
-        head = tmp;
-        return true;
-    }
-
-    tmpptr->prev->next = tmp;
-    tmpptr->prev = tmp;
-
-    tmp->prev = tmpptr->prev;
-    tmp->next = tmpptr;
-    tmp->prev->next = tmp;
-    tmp->next->prev = tmp;
-
-    return true;
-}
-
-bool Deck::insert(const Card &in, bool back)
+Iterator Deck::remove(Iterator pos)
 {
-    Node *tmp;
-    
-    tmp = new Node();
+    Node *ptr = pos._node->next;
 
-    if(tmp == nullptr)
-        return false;
+    pos._node->next = ptr->next;
+    ptr->next->prev = ptr->prev;
+    ptr->prev->next = ptr->next;
 
-    tmp->card = in;
-
-    if(head == nullptr)
-    {
-        head = tmp;
-        tail = tmp;
-        return true;
-    }
-
-    if (back)
-    {
-        tmp->prev = tail;
-        tail->next = tmp;
-        tail = tmp;
-        return true;
-    }
-
-    tmp->next = head;
-    head->prev = tmp;
-    head = tmp;
-    return true;
+    delete ptr;
+    return pos;
 }
 
-//Data
-Card& Deck::peek(int pos, bool reverse)const
+Iterator Deck::insert(const Card &in, Iterator pos)
 {
-    size_type tmpsize = size() - 1;
-    Node *tmpptr = head;
-    Card tmp;
-
-    if (pos > tmpsize)
-        return;
-
-    pos = (reverse) ? tmpsize - pos : pos;
-
-    for (int i = 0; i < pos; ++i)
-        tmpptr = tmpptr->next;
-
-    tmp = tmpptr->card;
-
-    return tmp;
+    Node *newNode = new Node(Card(in), pos._node->next, pos._node);
+    if (pos._node == tail) tail = newNode;
+    pos._node->next->prev = newNode;
+    pos._node->next = newNode;
+    return pos;
 }
 
-int Deck::seek(const Card& search, int start, bool reverse)const
+//Information
+Deck::Iterator Deck::begin() const
 {
-    size_type tmpsize = size();
-    Node *tmpptr = head;
-    Card tmpcard;
+    return Iterator(head);
+}
 
-    for (size_type i = 0; i < start; ++i)
-        tmpptr=tmpptr->next;
-
-    for (size_type i = start; i < tmpsize; ++i){
-        tmpcard = tmpptr->card;
-        tmpptr = tmpptr->next;
-
-        if (tmpcard == search){
-            i = (reverse) ? tmpsize - 1 - i : i;
-            return i;
-        }
-    }
-    return -1;
+Deck::Iterator Deck::end() const
+{
+    return Iterator(tail);
 }
 
 size_type Deck::size() const
@@ -549,6 +459,29 @@ bool Deck::empty() const
     return false;
 }
 
+Card &Deck::peek(Iterator pos) const
+{
+    Card card = Card(pos._node->next->card);
+    return card;
+}
+
+Iterator Deck::seek(const Card &search, Iterator start) const
+{
+    start = (start == nullptr) ? begin() : start;
+    Iterator tmpIt = start;
+
+    while (tmpIt._node->next != tail)
+    {
+        if (tmpIt._node->next->card == search)
+        {
+            return tmpIt;
+        }
+    }
+
+    return Iterator(nullptr);
+    
+}
+
 //Overloads
 Deck& Deck::operator=(const Deck& rhs)
 {
@@ -558,7 +491,22 @@ Deck& Deck::operator=(const Deck& rhs)
 
     while(tmpptr != nullptr)
     {
-        insert(tmpptr->card);
+        insert(tmpptr->card, end());
+        tmpptr = tmpptr->next;
+    }
+
+    return *this;
+}
+
+Deck &Deck::operator=(Deck &&rhs)
+{
+    Node *tmpptr = rhs.head;
+
+    clear();
+
+    while(tmpptr != nullptr)
+    {
+        insert(tmpptr->card, end());
         tmpptr = tmpptr->next;
     }
 
@@ -568,7 +516,8 @@ Deck& Deck::operator=(const Deck& rhs)
 bool Deck::operator==(const Deck& rhs)
 {
     size_type deckSize = size();
-    Node *lhsptr = head, *rhsptr = rhs.head;
+    Node *lhsptr = head;
+    Node *rhsptr = rhs.head;
 
     if (empty())
     {
@@ -585,7 +534,9 @@ bool Deck::operator==(const Deck& rhs)
     while(lhsptr != nullptr && rhsptr != nullptr)
     {
         if (lhsptr->card != rhsptr->card)
+        {
             return false;
+        }
         
         lhsptr = lhsptr->next;
         rhsptr = rhsptr->next;
@@ -595,4 +546,3 @@ bool Deck::operator==(const Deck& rhs)
 }
 
 #endif //PLAYINGCARDSLIB_LIBRARY_CPP_DECK
-
