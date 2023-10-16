@@ -64,6 +64,8 @@ CMAKE_BINARY_DIR = /mnt/c/dev/github/playingCardsLib/cmake-build-debug
 
 # The main recursive "all" target.
 all: CMakeFiles/playingCardsLib.dir/all
+all: CMakeFiles/deck_lib_test.dir/all
+all: CMakeFiles/deck_lib.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -72,6 +74,8 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/playingCardsLib.dir/clean
+clean: CMakeFiles/deck_lib_test.dir/clean
+clean: CMakeFiles/deck_lib.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -81,7 +85,7 @@ clean: CMakeFiles/playingCardsLib.dir/clean
 CMakeFiles/playingCardsLib.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target playingCardsLib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles --progress-num=5,6 "Built target playingCardsLib"
 .PHONY : CMakeFiles/playingCardsLib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -99,6 +103,58 @@ playingCardsLib: CMakeFiles/playingCardsLib.dir/rule
 CMakeFiles/playingCardsLib.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/clean
 .PHONY : CMakeFiles/playingCardsLib.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/deck_lib_test.dir
+
+# All Build rule for target.
+CMakeFiles/deck_lib_test.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib_test.dir/build.make CMakeFiles/deck_lib_test.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib_test.dir/build.make CMakeFiles/deck_lib_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles --progress-num=3,4 "Built target deck_lib_test"
+.PHONY : CMakeFiles/deck_lib_test.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/deck_lib_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/deck_lib_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/deck_lib_test.dir/rule
+
+# Convenience name for target.
+deck_lib_test: CMakeFiles/deck_lib_test.dir/rule
+.PHONY : deck_lib_test
+
+# clean rule for target.
+CMakeFiles/deck_lib_test.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib_test.dir/build.make CMakeFiles/deck_lib_test.dir/clean
+.PHONY : CMakeFiles/deck_lib_test.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/deck_lib.dir
+
+# All Build rule for target.
+CMakeFiles/deck_lib.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib.dir/build.make CMakeFiles/deck_lib.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib.dir/build.make CMakeFiles/deck_lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target deck_lib"
+.PHONY : CMakeFiles/deck_lib.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/deck_lib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/deck_lib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/dev/github/playingCardsLib/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/deck_lib.dir/rule
+
+# Convenience name for target.
+deck_lib: CMakeFiles/deck_lib.dir/rule
+.PHONY : deck_lib
+
+# clean rule for target.
+CMakeFiles/deck_lib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib.dir/build.make CMakeFiles/deck_lib.dir/clean
+.PHONY : CMakeFiles/deck_lib.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

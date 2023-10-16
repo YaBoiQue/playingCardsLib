@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/deck_lib_test.dir/deck_lib_test.cpp.o -o deck_lib_test  -Wl,-rpath,/mnt/c/dev/github/playingCardsLib/lib /mnt/c/dev/github/playingCardsLib/lib/libdeck_lib.so 

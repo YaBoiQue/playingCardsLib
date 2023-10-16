@@ -129,29 +129,103 @@ playingCardsLib/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/build
 .PHONY : playingCardsLib/fast
 
-library.o: library.cpp.o
-.PHONY : library.o
+#=============================================================================
+# Target rules for targets named deck_lib_test
+
+# Build rule for target.
+deck_lib_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 deck_lib_test
+.PHONY : deck_lib_test
+
+# fast build rule for target.
+deck_lib_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib_test.dir/build.make CMakeFiles/deck_lib_test.dir/build
+.PHONY : deck_lib_test/fast
+
+#=============================================================================
+# Target rules for targets named deck_lib
+
+# Build rule for target.
+deck_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 deck_lib
+.PHONY : deck_lib
+
+# fast build rule for target.
+deck_lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib.dir/build.make CMakeFiles/deck_lib.dir/build
+.PHONY : deck_lib/fast
+
+deck_lib.o: deck_lib.cpp.o
+.PHONY : deck_lib.o
 
 # target to build an object file
-library.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/library.cpp.o
-.PHONY : library.cpp.o
+deck_lib.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib.dir/build.make CMakeFiles/deck_lib.dir/deck_lib.cpp.o
+.PHONY : deck_lib.cpp.o
 
-library.i: library.cpp.i
-.PHONY : library.i
+deck_lib.i: deck_lib.cpp.i
+.PHONY : deck_lib.i
 
 # target to preprocess a source file
-library.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/library.cpp.i
-.PHONY : library.cpp.i
+deck_lib.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib.dir/build.make CMakeFiles/deck_lib.dir/deck_lib.cpp.i
+.PHONY : deck_lib.cpp.i
 
-library.s: library.cpp.s
-.PHONY : library.s
+deck_lib.s: deck_lib.cpp.s
+.PHONY : deck_lib.s
 
 # target to generate assembly for a file
-library.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/library.cpp.s
-.PHONY : library.cpp.s
+deck_lib.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib.dir/build.make CMakeFiles/deck_lib.dir/deck_lib.cpp.s
+.PHONY : deck_lib.cpp.s
+
+deck_lib_test.o: deck_lib_test.cpp.o
+.PHONY : deck_lib_test.o
+
+# target to build an object file
+deck_lib_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib_test.dir/build.make CMakeFiles/deck_lib_test.dir/deck_lib_test.cpp.o
+.PHONY : deck_lib_test.cpp.o
+
+deck_lib_test.i: deck_lib_test.cpp.i
+.PHONY : deck_lib_test.i
+
+# target to preprocess a source file
+deck_lib_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib_test.dir/build.make CMakeFiles/deck_lib_test.dir/deck_lib_test.cpp.i
+.PHONY : deck_lib_test.cpp.i
+
+deck_lib_test.s: deck_lib_test.cpp.s
+.PHONY : deck_lib_test.s
+
+# target to generate assembly for a file
+deck_lib_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deck_lib_test.dir/build.make CMakeFiles/deck_lib_test.dir/deck_lib_test.cpp.s
+.PHONY : deck_lib_test.cpp.s
+
+main.o: main.cpp.o
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/playingCardsLib.dir/build.make CMakeFiles/playingCardsLib.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 # Help Target
 help:
@@ -161,10 +235,18 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... deck_lib"
+	@echo "... deck_lib_test"
 	@echo "... playingCardsLib"
-	@echo "... library.o"
-	@echo "... library.i"
-	@echo "... library.s"
+	@echo "... deck_lib.o"
+	@echo "... deck_lib.i"
+	@echo "... deck_lib.s"
+	@echo "... deck_lib_test.o"
+	@echo "... deck_lib_test.i"
+	@echo "... deck_lib_test.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 

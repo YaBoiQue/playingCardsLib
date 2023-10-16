@@ -18,10 +18,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="playingCardsLib">
-				<Option output="/mnt/c/dev/github/playingCardsLib/cmake-build-debug/libplayingCardsLib.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/mnt/c/dev/github/playingCardsLib/cmake-build-debug/playingCardsLib" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/mnt/c/dev/github/playingCardsLib/cmake-build-debug"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/include/c++/11"/>
@@ -40,10 +40,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="playingCardsLib/fast">
-				<Option output="/mnt/c/dev/github/playingCardsLib/cmake-build-debug/libplayingCardsLib.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/mnt/c/dev/github/playingCardsLib/cmake-build-debug/playingCardsLib" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/mnt/c/dev/github/playingCardsLib/cmake-build-debug"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/include/c++/11"/>
@@ -56,6 +56,94 @@
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 playingCardsLib/fast"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="deck_lib_test">
+				<Option output="/mnt/c/dev/github/playingCardsLib/cmake-build-debug/deck_lib_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/dev/github/playingCardsLib/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 deck_lib_test"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="deck_lib_test/fast">
+				<Option output="/mnt/c/dev/github/playingCardsLib/cmake-build-debug/deck_lib_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/dev/github/playingCardsLib/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 deck_lib_test/fast"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="deck_lib">
+				<Option output="/mnt/c/dev/github/playingCardsLib/cmake-build-debug/libdeck_lib.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/dev/github/playingCardsLib/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 deck_lib"/>
+					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="deck_lib/fast">
+				<Option output="/mnt/c/dev/github/playingCardsLib/cmake-build-debug/libdeck_lib.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/dev/github/playingCardsLib/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 deck_lib/fast"/>
 					<CompileFile command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/gmake -j20 -f &quot;/mnt/c/dev/github/playingCardsLib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -82,10 +170,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/c/dev/github/playingCardsLib/library.cpp">
-			<Option target="playingCardsLib"/>
+		<Unit filename="/mnt/c/dev/github/playingCardsLib/deck_lib.cpp">
+			<Option target="deck_lib"/>
 		</Unit>
-		<Unit filename="/mnt/c/dev/github/playingCardsLib/library.h">
+		<Unit filename="/mnt/c/dev/github/playingCardsLib/deck_lib.h">
+			<Option target="deck_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/dev/github/playingCardsLib/deck_lib_test.cpp">
+			<Option target="deck_lib_test"/>
+		</Unit>
+		<Unit filename="/mnt/c/dev/github/playingCardsLib/main.cpp">
 			<Option target="playingCardsLib"/>
 		</Unit>
 		<Unit filename="/mnt/c/dev/github/playingCardsLib/CMakeLists.txt">

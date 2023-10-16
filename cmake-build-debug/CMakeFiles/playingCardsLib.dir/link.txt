@@ -1,2 +1,1 @@
-/usr/bin/ar qc libplayingCardsLib.a CMakeFiles/playingCardsLib.dir/library.cpp.o
-/usr/bin/ranlib libplayingCardsLib.a
+/usr/bin/c++ -g CMakeFiles/playingCardsLib.dir/main.cpp.o -o playingCardsLib  -Wl,-rpath,/mnt/c/dev/github/playingCardsLib/lib /mnt/c/dev/github/playingCardsLib/lib/libdeck_lib.so 

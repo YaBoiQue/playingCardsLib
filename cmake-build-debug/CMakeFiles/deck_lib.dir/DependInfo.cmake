@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/c/dev/github/playingCardsLib/main.cpp" "CMakeFiles/playingCardsLib.dir/main.cpp.o" "gcc" "CMakeFiles/playingCardsLib.dir/main.cpp.o.d"
+  "/mnt/c/dev/github/playingCardsLib/deck_lib.cpp" "CMakeFiles/deck_lib.dir/deck_lib.cpp.o" "gcc" "CMakeFiles/deck_lib.dir/deck_lib.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/playingCardsLib.dir/library.cpp.o"
-  "CMakeFiles/playingCardsLib.dir/library.cpp.o.d"
-  "libplayingCardsLib.a"
-  "libplayingCardsLib.pdb"
+  "CMakeFiles/playingCardsLib.dir/main.cpp.o"
+  "CMakeFiles/playingCardsLib.dir/main.cpp.o.d"
+  "playingCardsLib"
+  "playingCardsLib.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
